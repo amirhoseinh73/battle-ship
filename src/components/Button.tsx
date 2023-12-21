@@ -6,7 +6,7 @@ type BtnProps = {
   onPress?: (event: GestureResponderEvent) => void
 } & Record<string, unknown>
 
-export default function Button(props: BtnProps) {
+const BorderedButton = function (props: BtnProps) {
   const { onPress, title = "Start", ...rest } = props
 
   console.log(rest)
@@ -46,3 +46,5 @@ const styles = StyleSheet.create({
     color: "white",
   },
 })
+
+export default BorderedButton

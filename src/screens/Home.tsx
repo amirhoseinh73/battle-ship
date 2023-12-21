@@ -1,24 +1,22 @@
 import { StyleSheet, Text, View } from "react-native"
-import Button from "../components/Button"
 import { StatusBar } from "expo-status-bar"
 import { useState } from "react"
 import Play from "./Play"
+import BorderedButton from "../components/Button"
 
 const Home = function () {
   const [showPlayScreen, setShowPlayScreen] = useState(false)
 
-  const onPress = function () {
-    setShowPlayScreen(prevState => !prevState)
-  }
+  const onPress = () => setShowPlayScreen(true)
 
   return (
     <>
       {showPlayScreen ? (
-        <Play />
+        <Play setShowPlayScreen={setShowPlayScreen} />
       ) : (
         <View style={styles.container}>
           <Text style={styles.title}>Battle Ships!</Text>
-          <Button title="Start Game" onPress={onPress} />
+          <BorderedButton title="Start Game" onPress={onPress} />
           <StatusBar style="auto" />
         </View>
       )}

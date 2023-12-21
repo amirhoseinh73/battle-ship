@@ -1,13 +1,24 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
+import BorderedButton from "../components/Button"
+import Player from "../components/Player"
 
-const Play = function () {
+const Play = function ({
+  setShowPlayScreen,
+}: {
+  setShowPlayScreen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+  const players = [0, 1]
+
   return (
     <View style={styles.container}>
-      <View>
-        <Text>Player 1</Text>
-      </View>
-      <View>
-        <Text>Player 2</Text>
+      {players.map(player => (
+        <View key={player} style={styles.marginVert}>
+          <Player title={`Player ${player + 1}`} />
+        </View>
+      ))}
+
+      <View style={styles.surrender}>
+        <BorderedButton title="Surrender" onPress={() => setShowPlayScreen(false)} />
       </View>
     </View>
   )
@@ -18,6 +29,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-evenly",
     alignItems: "center",
+  },
+  marginVert: {
+    marginTop: "auto",
+  },
+  surrender: {
+    marginTop: "auto",
   },
 })
 
