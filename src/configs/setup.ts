@@ -1,4 +1,7 @@
-export const Houses = 64
+export enum BOARD {
+  x = 10,
+  y = 9,
+}
 
 export enum SHIPS_COUNT {
   large = 1,
@@ -13,3 +16,8 @@ export enum SHIPS_SIZE {
   small = 2,
   tiny = 1,
 }
+
+export const PLAYERS = {
+  CPU: "CPU",
+  USER: "YOU",
+} as const

@@ -9,7 +9,7 @@ type BtnProps = {
 const BorderedButton = function (props: BtnProps) {
   const { onPress, title = "Start", ...rest } = props
 
-  console.log(rest)
+  // console.log(rest)
 
   return (
     <View style={styles.container}>
@@ -22,7 +22,7 @@ const BorderedButton = function (props: BtnProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#dddddd",
+    backgroundColor: "#ddd",
     padding: 10,
     marginBottom: "auto",
     borderRadius: 10,
@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    elevation: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 22,
+    elevation: 0,
     backgroundColor: "inherit",
     borderColor: "#245bdc",
     borderStyle: "dashed",
