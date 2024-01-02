@@ -1,6 +1,6 @@
 export enum BOARD {
-  x = 10,
-  y = 9,
+  cols = 10,
+  rows = 9,
 }
 
 export enum SHIPS_COUNT {

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Pressable, StyleSheet } from "react-native"
+import { Pressable, StyleSheet, Text } from "react-native"
 
 const getBackground = function (
   filled: boolean,
@@ -32,9 +32,11 @@ const getBackground = function (
 const House = function ({
   isShip = false,
   fillType = null,
+  id,
 }: {
   isShip: boolean
   fillType: BoardFills
+  id: string
 }) {
   const [isFill, setIsFill] = useState(false)
 
@@ -46,8 +48,9 @@ const House = function ({
   return (
     <Pressable
       style={[styles.house, getBackground(isFill, isShip, fillType, false)]}
-      onPress={fillHouse}
-    />
+      onPress={fillHouse}>
+      <Text>{id}</Text>
+    </Pressable>
   )
 }
 

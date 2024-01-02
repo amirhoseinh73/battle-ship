@@ -1,55 +1,66 @@
 import { BOARD, SHIPS_COUNT, SHIPS_SIZE } from "../configs/setup"
+import { genrateRandNum } from "./global"
 
 type CalcOffsetShipsArgs = {
-  x: number
-  y: number
+  position: Position
   len: number
   orientation?: ShipOrientation
 }
 
 const randomPositions = function () {
-  return Math.floor(Math.random() * BOARD.x * BOARD.y) + 1
+  return {
+    x: genrateRandNum(BOARD.rows),
+    y: genrateRandNum(BOARD.cols),
+  }
 }
 
-const offsetShip = function ({ x: xStart, y: yStart, len, orientation }: CalcOffsetShipsArgs) {
-  const x1 = xStart - 1
-  const y1 = yStart - 1
+const offsetShip = function ({ position: { x, y }, len, orientation }: CalcOffsetShipsArgs) {
+  const OFFSET = 1
+  const MIN = 0
+  const MAX_X = BOARD.cols
+  const MAX_Y = BOARD.rows
 
-  let x2 = x1 + len + 1,
-    y2 = y1 + 2
+  let x1 = x - OFFSET
+  let y1 = y - OFFSET
+
+  if (x1 < MIN) x1 += 1
+  if (y1 < MIN) y1 += 1
+
+  let x2 = x + len
+  let y2 = y + OFFSET
 
   if (orientation === "vertical") {
-    x2 = x1 + 2
-    y2 = y1 + len + 1
+    x2 = x + OFFSET
+    y2 = y + len
   }
+
+  if (x2 > MAX_X) x2 -= 1
+  if (y2 > MAX_Y) y2 -= 1
 
   return { x1, x2, y1, y2 }
 }
 
-const arePositionsTooClose = function (x1: number, y1: number, x2: number, y2: number) {
-  const ship1 = offsetShip({ x: x1, y: y1, len: SHIPS_SIZE.tiny })
-  const ship2 = offsetShip({ x: x2, y: y2, len: SHIPS_SIZE.tiny })
+const arePositionsTooClose = function (prevPos: Position, nextPos: Position, len: number) {
+  const ship1 = offsetShip({ position: prevPos, len })
+  const ship2 = offsetShip({ position: nextPos, len })
 
-  console.log("===============================")
-  console.log({ ship1, ship2 })
+  console.log({ ship2, ship1 })
 
   const tooCloseX = ship1.x1 <= ship2.x2 && ship1.x2 >= ship2.x1
   const tooCloseY = ship1.y1 <= ship2.y2 && ship1.y2 >= ship2.y1
 
-  return tooCloseX || tooCloseY
+  return tooCloseX && tooCloseY
 }
 
-const tinyShipPositionsTooClose = (x: number, y: number) => arePositionsTooClose(x, x, y, y)
-
 export const getTinyShipPositionsCPU = function () {
-  const tinyShips: number[] = []
+  const tinyShips: Position[] = []
 
   for (let i = 1; i <= SHIPS_COUNT.tiny; i++) {
-    let newPos: number
+    let newPos: Position
 
     do {
       newPos = randomPositions()
-    } while (tinyShips.some(existingPos => tinyShipPositionsTooClose(newPos, existingPos)))
+    } while (tinyShips.some(prevPos => arePositionsTooClose(prevPos, newPos, SHIPS_SIZE.tiny)))
 
     tinyShips.push(newPos)
   }
@@ -58,5 +69,5 @@ export const getTinyShipPositionsCPU = function () {
   console.log("****************************************")
   console.log("****************************************")
 
-  return tinyShips as [number, number, number, number]
+  return tinyShips
 }

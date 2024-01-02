@@ -4,7 +4,7 @@ import { BOARD } from "../configs/setup"
 import { getTinyShipPositionsCPU } from "../helpers/getShips"
 
 const getShips = function () {
-  const tinyShips: number[] = getTinyShipPositionsCPU()
+  const tinyShips: Position[] = getTinyShipPositionsCPU()
 
   return {
     tinyShips,
@@ -14,19 +14,29 @@ const getShips = function () {
 const Player = function ({ title }: { title: string }) {
   const { tinyShips } = getShips()
 
-  const houses: BoardFills[] = Array(BOARD.x * BOARD.y).fill(null)
+  const houses: BoardFills[][] = Array.from({ length: BOARD.rows }, () =>
+    Array(BOARD.cols).fill("blank")
+  )
 
-  for (const tiny of tinyShips) {
-    houses[tiny] = "tiny"
+  for (const { x, y } of tinyShips) {
+    houses[x][y] = "tiny"
   }
 
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
-        {houses.map((house, idx) => (
-          <House key={idx} isShip={Boolean(house)} fillType={house} />
-        ))}
+        {houses.map((rows, idx) =>
+          rows.map((cols, idy) => (
+            // TODO: Must remove isShip attribute
+            <House
+              key={idy}
+              isShip={cols === "blank" ? false : true}
+              fillType={cols}
+              id={idx + "-" + idy}
+            />
+          ))
+        )}
       </View>
     </>
   )

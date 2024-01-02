@@ -5,3 +5,8 @@ type ShipDestroyed = "tinyD" | "smallD" | "mediumD" | "largeD"
 type BoardFills = "blank" | "fill" | "hit" | ShipNames | ShipDestroyed
 
 type ShipOrientation = "vertical" | "horizontal"
+
+type Position = {
+  x: number
+  y: number
+}
