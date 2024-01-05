@@ -7,7 +7,7 @@ type CalcOffsetShipsArgs = {
   orientation?: ShipOrientation
 }
 
-const randomPositions = function () {
+export const randomPositions = function () {
   return {
     x: genrateRandNum(BOARD.rows),
     y: genrateRandNum(BOARD.cols),
@@ -44,8 +44,6 @@ const arePositionsTooClose = function (prevPos: Position, nextPos: Position, len
   const ship1 = offsetShip({ position: prevPos, len })
   const ship2 = offsetShip({ position: nextPos, len })
 
-  console.log({ ship2, ship1 })
-
   const tooCloseX = ship1.x1 <= ship2.x2 && ship1.x2 >= ship2.x1
   const tooCloseY = ship1.y1 <= ship2.y2 && ship1.y2 >= ship2.y1
 
@@ -64,10 +62,6 @@ export const getTinyShipPositionsCPU = function () {
 
     tinyShips.push(newPos)
   }
-
-  console.log("****************************************")
-  console.log("****************************************")
-  console.log("****************************************")
 
   return tinyShips
 }

@@ -1,5 +1,6 @@
+import React from "react"
 import { StyleSheet, View } from "react-native"
-import BorderedButton from "../components/Button"
+import BorderedButton from "../components/BorderedButton"
 import Player from "../components/Player"
 import { PLAYERS } from "../configs/setup"
 
@@ -12,11 +13,14 @@ const Play = function ({
 
   return (
     <View style={styles.container}>
-      {players.map(player => (
-        <View key={player} style={[styles.player, styles[`player${player}`]]}>
-          <Player title={player === 0 ? PLAYERS.CPU : PLAYERS.USER} />
-        </View>
-      ))}
+      {players.map(player => {
+        const className = `player${player}` as "player0" | "player1"
+        return (
+          <View key={player} style={[styles.player, styles[className]]}>
+            <Player title={player === 0 ? PLAYERS.CPU : PLAYERS.USER} />
+          </View>
+        )
+      })}
 
       <View style={styles.surrender}>
         <BorderedButton title="Surrender" onPress={() => setShowPlayScreen(false)} />

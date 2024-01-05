@@ -1,5 +1,6 @@
+import React from "react"
 import { StyleSheet, Text, View } from "react-native"
-import BorderedButton from "../components/Button"
+import BorderedButton from "../components/BorderedButton"
 
 const MainMenu = function ({
   setShowPlayScreen,

@@ -1,3 +1,4 @@
+import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import House from "./House"
 import { BOARD } from "../configs/setup"

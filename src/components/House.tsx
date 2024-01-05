@@ -1,10 +1,11 @@
+import React from "react"
 import { useState } from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 
 const getBackground = function (
   filled: boolean,
   isShip: boolean,
-  shipKind: BoardFills = undefined,
+  shipKind: BoardFills | null = null,
   shipDestroyed = false
 ) {
   // hidden ships not hitted yet
@@ -35,7 +36,7 @@ const House = function ({
   id,
 }: {
   isShip: boolean
-  fillType: BoardFills
+  fillType: BoardFills | null
   id: string
 }) {
   const [isFill, setIsFill] = useState(false)
