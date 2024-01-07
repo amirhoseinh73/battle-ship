@@ -7,8 +7,8 @@ type BtnProps = {
 } & Record<string, unknown>
 
 const BorderedButton = function (props: BtnProps) {
-  const { onPress, title = "Start", ...rest } = props
-
+  const { onPress, title = "Start" } = props
+  //, ...rest
   // console.log(rest)
 
   return (

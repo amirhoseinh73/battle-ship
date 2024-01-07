@@ -1,8 +1,18 @@
 import React from "react"
-import renderer from "react-test-renderer"
+import renderer, { ReactTestRenderer } from "react-test-renderer"
 import BorderedButton from "../BorderedButton"
 
 test("renders correctly BorderedButton", () => {
-  const btn = renderer.create(<BorderedButton title="test" />).toJSON()
-  expect(btn).toMatchSnapshot()
+  const onPressMock = jest.fn()
+
+  const btnWithText: ReactTestRenderer = renderer.create(
+    <BorderedButton title="test" onPress={onPressMock} />
+  )
+  expect(btnWithText.toJSON()).toMatchSnapshot()
+
+  const btnWithoutText = renderer.create(<BorderedButton title="" onPress={onPressMock} />).toJSON()
+  expect(btnWithoutText).toMatchSnapshot()
+
+  btnWithText.root.props.onPress()
+  expect(onPressMock).toHaveBeenCalled()
 })

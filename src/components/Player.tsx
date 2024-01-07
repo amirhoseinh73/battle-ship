@@ -2,15 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import House from "./House"
 import { BOARD } from "../configs/setup"
-import { getTinyShipPositionsCPU } from "../helpers/getShips"
-
-const getShips = function () {
-  const tinyShips: Position[] = getTinyShipPositionsCPU()
-
-  return {
-    tinyShips,
-  }
-}
+import { getShips } from "./playerHelper"
 
 const Player = function ({ title }: { title: string }) {
   const { tinyShips } = getShips()
@@ -28,15 +20,7 @@ const Player = function ({ title }: { title: string }) {
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         {houses.map((rows, idx) =>
-          rows.map((cols, idy) => (
-            // TODO: Must remove isShip attribute
-            <House
-              key={idy}
-              isShip={cols === "blank" ? false : true}
-              fillType={cols}
-              id={idx + "-" + idy}
-            />
-          ))
+          rows.map((cols, idy) => <House key={idy} houseType={cols} id={idx + "-" + idy} />)
         )}
       </View>
     </>

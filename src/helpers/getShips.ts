@@ -1,9 +1,9 @@
-import { BOARD, SHIPS_COUNT, SHIPS_SIZE } from "../configs/setup"
+import { BOARD, SHIPS_SIZE } from "../configs/setup"
 import { genrateRandNum } from "./global"
 
 type CalcOffsetShipsArgs = {
   position: Position
-  len: number
+  len: SHIPS_SIZE
   orientation?: ShipOrientation
 }
 
@@ -11,7 +11,7 @@ export const randomPositions = function () {
   return {
     x: genrateRandNum(BOARD.rows),
     y: genrateRandNum(BOARD.cols),
-  }
+  } as Position
 }
 
 const offsetShip = function ({ position: { x, y }, len, orientation }: CalcOffsetShipsArgs) {
@@ -40,7 +40,11 @@ const offsetShip = function ({ position: { x, y }, len, orientation }: CalcOffse
   return { x1, x2, y1, y2 }
 }
 
-const arePositionsTooClose = function (prevPos: Position, nextPos: Position, len: number) {
+export const arePositionsTooClose = function (
+  prevPos: Position,
+  nextPos: Position,
+  len: SHIPS_SIZE
+) {
   const ship1 = offsetShip({ position: prevPos, len })
   const ship2 = offsetShip({ position: nextPos, len })
 
@@ -48,20 +52,4 @@ const arePositionsTooClose = function (prevPos: Position, nextPos: Position, len
   const tooCloseY = ship1.y1 <= ship2.y2 && ship1.y2 >= ship2.y1
 
   return tooCloseX && tooCloseY
-}
-
-export const getTinyShipPositionsCPU = function () {
-  const tinyShips: Position[] = []
-
-  for (let i = 1; i <= SHIPS_COUNT.tiny; i++) {
-    let newPos: Position
-
-    do {
-      newPos = randomPositions()
-    } while (tinyShips.some(prevPos => arePositionsTooClose(prevPos, newPos, SHIPS_SIZE.tiny)))
-
-    tinyShips.push(newPos)
-  }
-
-  return tinyShips
 }

@@ -38,3 +38,5 @@ yarn-error.*
 
 /plugins
 /.jest
+/coverage
+*.test.tsx.snap

@@ -2,54 +2,42 @@ import React from "react"
 import { useState } from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 
-const getBackground = function (
-  filled: boolean,
-  isShip: boolean,
-  shipKind: BoardFills | null = null,
-  shipDestroyed = false
-) {
-  // hidden ships not hitted yet
-  if (isShip && !filled) {
-    if (shipKind === "tiny") return { backgroundColor: "#FFFF00" }
-    if (shipKind === "small") return { backgroundColor: "green" }
-    if (shipKind === "medium") return { backgroundColor: "orange" }
-    if (shipKind === "large") return { backgroundColor: "brown" }
-  }
-
-  if (isShip && filled) return { backgroundColor: "lightblue" } // first hit
-
-  // ship destroyed
+const getBackground = function (touched: boolean, houseType: BoardFills, shipDestroyed = false) {
   if (shipDestroyed) {
-    if (shipKind === "tiny") return { backgroundColor: "#FFFF00" }
-    if (shipKind === "small") return { backgroundColor: "green" }
-    if (shipKind === "medium") return { backgroundColor: "orange" }
-    if (shipKind === "large") return { backgroundColor: "brown" }
+    if (houseType === "tiny") return { backgroundColor: "#666" }
+    if (houseType === "small") return { backgroundColor: "#555" }
+    if (houseType === "medium") return { backgroundColor: "#444" }
+    if (houseType === "large") return { backgroundColor: "#333" }
   }
 
-  if (filled) return { backgroundColor: "red" }
+  if (touched) {
+    if (houseType === "blank") return { backgroundColor: "#d80000" }
+
+    return { backgroundColor: "#6a0000" }
+  }
+
+  if (houseType === "tiny") return { backgroundColor: "#fbff00" }
+  if (houseType === "small") return { backgroundColor: "#ff00ea" }
+  if (houseType === "medium") return { backgroundColor: "#00ff80" }
+  if (houseType === "large") return { backgroundColor: "#3a00b7" }
+
   return { backgroundColor: "#888" }
 }
 
-const House = function ({
-  isShip = false,
-  fillType = null,
-  id,
-}: {
-  isShip: boolean
-  fillType: BoardFills | null
-  id: string
-}) {
-  const [isFill, setIsFill] = useState(false)
+const House = function ({ houseType, id }: { houseType: BoardFills; id: string }) {
+  const [isTouched, setIsTouched] = useState(false)
 
   const fillHouse = () => {
-    if (isFill) return
-    setIsFill(true)
+    if (isTouched) return
+    setIsTouched(true)
   }
 
+  //TODO: Must Calculate how a ship destroyed
   return (
     <Pressable
-      style={[styles.house, getBackground(isFill, isShip, fillType, false)]}
-      onPress={fillHouse}>
+      style={[styles.house, getBackground(isTouched, houseType, false)]}
+      onPress={fillHouse}
+      testID="house-component-shootable">
       <Text>{id}</Text>
     </Pressable>
   )
